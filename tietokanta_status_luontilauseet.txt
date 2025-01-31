@@ -1,0 +1,6 @@
+insert into invoice_status (id, name) values (0, 'All ok');
+insert into invoice_status (id, name) values (1, 'ref error');
+insert into invoice_status (id, name) values (2, 'iban error');
+insert into invoice_status (id, name) values (3, 'amount error');
+
+insert into invoice_status (id, name) values (-1, 'Processing');
