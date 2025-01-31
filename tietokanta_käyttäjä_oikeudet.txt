@@ -1,0 +1,18 @@
+-- luodaan käyttäjä
+CREATE USER 'robotuser'@'localhost' IDENTIFIED BY 'jonijavilho';
+
+-- luodaan rooli
+create role robotrole;
+
+-- annetaan roolin oikeus käyttäjälle
+grant robotrole to 'robotuser'@'localhost';
+
+-- asennetaan käyttäjälle oletuksena roolit käyttöön, kun kirjaudutaan
+set default role all to 'robotuser'@'localhost';
+
+-- annetaan oikeudet roolille haluttuun tietokantaan
+use rpa;
+
+grant select, insert, update on invoice_header to robotrole;
+grant select, insert, update on invoice_row to robotrole;
+grant select on invoice_status to robotrole;
