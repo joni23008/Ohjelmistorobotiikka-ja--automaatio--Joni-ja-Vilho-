@@ -19593,16 +19593,16 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Vilho\\.nuget\\packages\\": {},
+    "C:\\Users\\jonim\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "restore": {
       "projectUniqueName": "UiPath",
       "projectName": "UiPath",
-      "projectPath": "C:\\Users\\Vilho\\OneDrive\\Desktop\\Gitit\\Ohjelmistorobotiikka-ja--automaatio--Joni-ja-Vilho-\\UiPath\\.local",
-      "packagesPath": "C:\\Users\\Vilho\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Vilho\\OneDrive\\Desktop\\Gitit\\Ohjelmistorobotiikka-ja--automaatio--Joni-ja-Vilho-\\UiPath\\.local",
+      "projectPath": "C:\\Users\\jonim\\Documents\\GitHub\\Ohjelmistorobotiikka-ja--automaatio--Joni-ja-Vilho-\\UiPath\\.local",
+      "packagesPath": "C:\\Users\\jonim\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\jonim\\Documents\\GitHub\\Ohjelmistorobotiikka-ja--automaatio--Joni-ja-Vilho-\\UiPath\\.local",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ]
@@ -19636,7 +19636,7 @@
             "version": "[24.10.7, 24.10.7]"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Users\\Vilho\\AppData\\Local\\Programs\\UiPath\\Studio\\PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Users\\jonim\\AppData\\Local\\Programs\\UiPath\\Studio\\PortableRuntimeIdentifierGraph.json"
       }
     },
     "runtimes": {
