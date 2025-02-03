@@ -1,0 +1,4 @@
+﻿invoiceNumber,companyName,referenceNumber,invoiceDate,dueDate,companyCode,bankAccountNumber,amountExlVat,vatAmount,totalAmount
+143143,Company Ltd,1431432,15.12.2022,07.04.2021,1234567-8,FI12 3456 7890 1234 56,1350,0,0
+,,,,,1234567-9,,0,0,0
+153143,Company Ltd,1531439,15.12.2022,01.04.2021,1234567-8,FI12 3456 7890 1234 56,2700,0,0
