@@ -1,0 +1,4 @@
+﻿InvoiceNumber;CompanyName;CompanyCode;ReferenceNumber;InvoiceDate;DueDate;BankAccountNumber;AmountExcludeVAT;VAT;TotalAmount
+;;1234567-8;;;;;0;0;0
+;;1234567-9;;;;;0;0;0
+;;1234567-8;;;;;0;0;0

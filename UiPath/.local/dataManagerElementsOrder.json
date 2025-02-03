@@ -19,7 +19,13 @@
     {
       "Path": "Joni.xaml",
       "SortBy": 0,
-      "VariablesSectionElementsOrder": [],
+      "VariablesSectionElementsOrder": [
+        "dt_HeaderResult&Sequence_1",
+        "dt_RowResult&Sequence_1",
+        "Files&Sequence_1",
+        "pdfFullText&Sequence_1",
+        "companyCode&Sequence_1"
+      ],
       "ArgumentsSectionElementsOrder": [],
       "ConstantsSectionElementsOrder": [],
       "AddedNamespaces": null
