@@ -112,13 +112,13 @@
       <AssemblyReference>Microsoft.VisualBasic.Core</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Vilho" sap:VirtualizedContainerService.HintSize="902.4000000000001,3956" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="Vilho" sap:VirtualizedContainerService.HintSize="902.4000000000001,4073.6" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <Sequence sap:VirtualizedContainerService.HintSize="571.2,3932.8" sap2010:WorkflowViewState.IdRef="Sequence_2">
+    <Sequence sap:VirtualizedContainerService.HintSize="571.2,4050.4" sap2010:WorkflowViewState.IdRef="Sequence_2">
       <Sequence.Variables>
         <Variable x:TypeArguments="sd:DataTable" Name="dt_RowResults" />
         <Variable x:TypeArguments="sd:DataTable" Name="dt_HeaderResult" />
@@ -323,7 +323,8 @@
       </ui:ForEach>
       <ui:Comment sap:VirtualizedContainerService.HintSize="537.6,88" sap2010:WorkflowViewState.IdRef="Comment_2" Text="Kirjoitetaan CSV&#xA;" />
       <ui:DeleteFileX DisplayName="Delete File" sap:VirtualizedContainerService.HintSize="537.6,112.8" sap2010:WorkflowViewState.IdRef="DeleteFileX_1" Path="invoiceHeaderDataVilho.csv" />
-      <ui:WriteCsvFile AddHeaders="True" DataTable="[dt_HeaderResult]" Delimitator="Comma" DisplayName="Write CSV" FilePath="invoiceHeaderDataVilho.csv" sap:VirtualizedContainerService.HintSize="537.6,178.4" sap2010:WorkflowViewState.IdRef="WriteCsvFile_1" ShouldQuote="True" />
+      <ui:WriteCsvFile AddHeaders="True" DataTable="[dt_HeaderResult]" Delimitator="Comma" DisplayName="Write CSV" FilePath="invoiceHeaderDataVilho.csv" sap:VirtualizedContainerService.HintSize="537.6,187.2" sap2010:WorkflowViewState.IdRef="WriteCsvFile_1" ShouldQuote="True" />
+      <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="537.6,108.8" sap2010:WorkflowViewState.IdRef="MessageBox_1" Text="[&quot;vittu&quot;]" />
     </Sequence>
   </Sequence>
 </Activity>
