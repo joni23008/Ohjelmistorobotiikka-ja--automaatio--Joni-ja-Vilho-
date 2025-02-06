@@ -1,0 +1,15 @@
+*
+!*.xaml
+!project.json
+!.gitignore
+!*.drawio
+!*.docx
+!*.md
+
+# Kuvakaappaukset
+!Kuvakaappaukset/
+!Kuvakaappaukset/**
+# Tietokanta
+!Tietokanta/
+!Tietokanta/**
+# UiPath
