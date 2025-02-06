@@ -17,11 +17,10 @@
       "AddedNamespaces": null
     },
     {
-      "Path": "Joni.xaml",
+      "Path": "HeaderJoni.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": [
         "dt_HeaderResult&Sequence_1",
-        "dt_RowResult&Sequence_1",
         "Files&Sequence_1",
         "pdfFullText&Sequence_1",
         "companyCode&Sequence_1",
@@ -43,6 +42,29 @@
       "Path": "Vilho.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": [],
+      "ArgumentsSectionElementsOrder": [],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "RowJoni.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "pdfSmallText&Sequence_1",
+        "total&Sequence_1",
+        "vat&Sequence_1",
+        "vatPercent&Sequence_1",
+        "unitPrice&Sequence_1",
+        "unit&Sequence_1",
+        "quantity&Sequence_1",
+        "description&Sequence_1",
+        "rowNumber&Sequence_1",
+        "dt_RowResult&Sequence_1",
+        "Files&Sequence_1",
+        "pdfFullText&Sequence_1",
+        "companyCode&Sequence_1",
+        "invoiceNumber&Sequence_1"
+      ],
       "ArgumentsSectionElementsOrder": [],
       "ConstantsSectionElementsOrder": [],
       "AddedNamespaces": null
