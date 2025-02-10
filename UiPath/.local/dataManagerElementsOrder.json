@@ -43,6 +43,8 @@
       "Path": "Vilho.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": [
+        "totalAmount&Sequence_8",
+        "vatAmount&Sequence_8",
         "dt_RowResults&Sequence_2",
         "dt_HeaderResult&Sequence_2",
         "files&Sequence_2",
