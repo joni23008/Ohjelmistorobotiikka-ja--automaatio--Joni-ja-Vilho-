@@ -13,3 +13,7 @@
 !Tietokanta/
 !Tietokanta/**
 # UiPath
+
+# RF
+!RF/
+!RF/**

@@ -1,0 +1,11 @@
+Header:
+1. laskunumero/viitenumero (1,3,7 yms)
+2. Iban
+3. Laskun summa, vat ja ilman vat
+Bonus:
+4. invoiceDate pitää olla aikaisemmin kun dueDate
+
+Row:
+1. Total,Vat,VatPercent,UnitPrice ja Unit vertailu. Summan oikeellisuus.
+Bonus:
+2. InvoiceNumber mukaan, vertaillaan keskenää kaikkia laskulla olevia rivejä ja että summat täsmäävät jne. Header taulua siis myös käytetään.
