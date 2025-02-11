@@ -43,13 +43,14 @@
       "Path": "Vilho.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": [
-        "totalAmount&Sequence_8",
-        "vatAmount&Sequence_8",
         "dt_RowResults&Sequence_2",
         "dt_HeaderResult&Sequence_2",
         "files&Sequence_2",
+        "rowText&Sequence_2",
         "pdfText&Sequence_3",
         "companyCode&Sequence_3",
+        "splittedInvoiceRows&Sequence_3",
+        "invoiceRowNumber&Sequence_3",
         "invoiceDate&Sequence_7",
         "invoiceNumber&Sequence_7",
         "amountExclVat&Sequence_7",
@@ -65,7 +66,10 @@
         "invoiceDate&Sequence_8",
         "bankAccountNumber&Sequence_8",
         "dueDate&Sequence_8",
-        "amountExclVat&Sequence_8"
+        "amountExclVat&Sequence_8",
+        "vatAmount&Sequence_8",
+        "totalAmount&Sequence_8",
+        "splittedRow&Sequence_12"
       ],
       "ArgumentsSectionElementsOrder": [],
       "ConstantsSectionElementsOrder": [],
