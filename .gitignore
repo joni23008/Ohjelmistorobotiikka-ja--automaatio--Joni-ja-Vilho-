@@ -1,4 +1,5 @@
-
+# Tää täppä saattaa vittuilla UiPath kanssa jos tekee xaml tiedostoja tai uusia CSV tiedostoja
+*
 !*.xaml
 !project.json
 !*.drawio
@@ -17,3 +18,6 @@
 # RF
 !RF/
 !RF/**
+# ei reportteja tarvii jakaa kaikille 
+RF/*.html
+RF/*.xml
