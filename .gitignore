@@ -14,7 +14,7 @@
 !Tietokanta/
 !Tietokanta/**
 # UiPath
-
+!UiPath/*.csv
 # RF
 !RF/
 !RF/**
