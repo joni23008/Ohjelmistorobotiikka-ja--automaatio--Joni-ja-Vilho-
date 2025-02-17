@@ -1,0 +1,5 @@
+﻿description;quantity;unit;unitPrice;vatPercent;vat;totalAmount;invoiceNumber;rowNumber
+Installation Services;5;h;60;24;72;372;1543235;1
+Replacement Products;10;kpl;105;24;252;1302;1543235;2
+Cleaning Services;5;h;60;24;72;372;1543235;3
+Cleaning Wipes;10;kpl;105;24;252;1302;1543235;4
