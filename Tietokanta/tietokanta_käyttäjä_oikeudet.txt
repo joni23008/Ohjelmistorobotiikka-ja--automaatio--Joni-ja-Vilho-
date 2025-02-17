@@ -1,5 +1,5 @@
 -- luodaan käyttäjä
-CREATE USER 'robotuser'@'localhost' IDENTIFIED BY 'jonijavilho';
+CREATE USER 'robotuser'@'localhost' IDENTIFIED BY 'jonijavilho'; (tai IDENTIFIED BY 'password')
 
 -- luodaan rooli
 create role robotrole;
