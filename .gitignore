@@ -5,6 +5,7 @@
 !*.drawio
 !*.docx
 !*.md
+!*.csv
 
 # Kuvakaappaukset
 !Kuvakaappaukset/
