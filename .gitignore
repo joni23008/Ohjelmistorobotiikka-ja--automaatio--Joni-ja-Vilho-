@@ -1,7 +1,6 @@
-*
+
 !*.xaml
 !project.json
-!.gitignore
 !*.drawio
 !*.docx
 !*.md
