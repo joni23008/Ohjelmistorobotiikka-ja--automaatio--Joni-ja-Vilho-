@@ -5,6 +5,7 @@ Library    String
 Library    Collections
 Library    Process
 Library    DateTime
+Library    validate.py
 
 *** Variables ***
 # polku csv
@@ -17,11 +18,11 @@ ${dbhost}    localhost
 ${dbport}    3306
 
 *** Keywords ***
-Make connection
+Make Connection
     Connect To Database    pymysql    ${dbname}    ${dbuser}    ${dbpass}    ${dbhost}    ${dbport}
 Add Invoice Header To DB
     [Arguments]    ${items}
-    Make connection
+    Make Connection
 
     # Nää on kovakoodattu ny (-1, Processing)
     # Status tiedot (invoice_status_id, comments)
@@ -38,13 +39,33 @@ Add Invoice Header To DB
     Disconnect From Database
 Add Invoice Row To DB
     [Arguments]    ${items}
-    Make connection
+    Make Connection
     
     ${insertStatement}=    Set Variable    insert into invoice_row (invoice_number,rownumber,description,quantity,unit,unit_price,vat_percent,vat,total) values ('${items}[0]', '${items}[1]', '${items}[2]', '${items}[3]', '${items}[4]', '${items}[5]', '${items}[6]', '${items}[7]', '${items}[8]');
     Log    ${insertStatement}
     Execute Sql String    ${insertStatement}
 
     Disconnect From Database
+Check Amount From Invoice
+    [Arguments]    ${totalSumFromHeaders}    ${totalSumFromRows}
+    ${status}=    Set Variable    ${False}
+
+    # sisältö
+    ${totalSumFromHeaders}=    Convert To Number    ${totalSumFromHeaders}
+    ${totalSumFromRows}=    Convert To Number    ${totalSumFromRows}
+    ${diff}=    Convert To Number    0.01
+
+    ${status}=    Is Equal    ${totalSumFromHeaders}    ${totalSumFromRows}    ${diff}
+
+    RETURN    ${status}
+Convert Query Result To Decimal List
+    [Arguments]    ${query_result}
+    ${decimal_list}    Create List
+    FOR    ${row}    IN    @{query_result}
+        ${value}    Convert To Number    ${row}[0]
+        Append To List    ${decimal_list}    ${value}
+    END
+    RETURN    ${decimal_list}
 *** Tasks ***
 read csv to list
     # luetaaan csv tiedosto yhteen merkkijonoon
@@ -89,53 +110,45 @@ read csv to list
 
 *** Tasks ***
 Validate and update validation info to DB
-    # Etsi kaikki invoicet joiden status id on -1 eli processing
-    # Validoi:
-    #     - reference number
-    #     - IBAN
-    #     - invoice row summa vs invoice header summa
     Make connection
+    # Query jolla etsitään kaikki invoicet joiden status id on -1 eli processing
+    ${invoices}=    Query    select invoice_number, total_amount from invoice_header where invoice_status_id = -1;
+    # Status koodit
+    @{invoiceStatus}=    Create List    -1    0    1    2    3
+    @{invoiceComment}=    Create List    Processing    All ok    ref error    iban error    amount error
+    # Query jolla päivitetään laskun status id ja kommentti
+    ${updateStatement}=    Set Variable    update invoice_header set invoice_status_id = %s, comments = %s where invoice_number = %s;
 
-    ${invoices}=    Query    select invoice_number, reference_number, bank_account_number, total_amount from invoice_header where invoice_status_id = -1;
-
+    # Looppaa läpi jokainen header otsikko jossa status id oli -1
     FOR    ${invoice}    IN    @{invoices}
-        Log    ${invoice}
-        ${invoiceStatus}=    Set Variable    0
-        ${invoiceComment}=    Set Variable    All ok
+        # Loggaa mikä laskunumero, tiedetään mikä lasku on kyseessä
+        Log    ${invoice}[0]
+
+        # Hae rullaavan laskun laskunumeron mukaan kaikki rivit ja niistä summat tietokannasta
+        ${invoiceRows}=    Query    select total from invoice_row where invoice_number = '${invoice}[0]';
+
+        # Loggaa kaikki rivit joilla on tämä laskunumero
+        Log    ${invoiceRows}
+
+        ${decimal_values}    Convert Query Result To Decimal List    ${invoiceRows}
+        ${rivienSummaTulos}    Evaluate    sum(${decimal_values})
+
+        ${summaStatus}=    Check Amount From Invoice    ${invoice}[1]    ${rivienSummaTulos}
+        IF    ${summaStatus}
+            Log    Summat täsmää
+            # Kaikki OK tällä laskulla!
+            @{ok}=    Create List    ${invoiceStatus}[1]    ${invoiceComment}[1]    ${invoice}[0]
+            # Päivitetään header tauluun tälle laskulle, tämän mukaan status id ja kommentti
+            Execute Sql String    ${updateStatement}    parameters=${ok}
+        ELSE
+            Log    Summat eivät ole samat
+            # Summa on väärin tällä laskulla!
+            @{summaVäärä}=    Create List    ${invoiceStatus}[3]    ${invoiceComment}[3]    ${invoice}[0]
+            # Päivitetään header tauluun tälle laskulle, tämän mukaan status id ja kommentti
+            Execute Sql String    ${updateStatement}    parameters=${summaVäärä}
+        END
         
-        # Validoinnit
-        
-        # päivitä header taulu
-        @{params}=    Create List    ${invoiceStatus}    ${invoiceComment}    ${invoice}[0]
-        ${updateStatement}=    Set Variable    update invoice_header set invoice_status_id = %s, comments = %s where invoice_number = %s;
-        Execute Sql String    ${updateStatement}    parameters=${params}
     END
 
     Disconnect From Database
-
-
-# select data from database
-    # Make connection
-    # @{invoicestatusList}=    Query    select * from invoice_status;
-
-    # FOR    ${element}    IN    @{invoicestatusList}
-    #     Log    ${element}
-    #     Log    ${element}[0]
-    #     Log    ${element}[1]
-        
-    # END
-
-    # Disconnect From Database
-
-# insert data to database
-# ei onnistu koska robotilla ei ole oikeuksia
-# grant insert on invoicestatus to robotrole;
-# jos oikeutta ei tarvita
-# revoke insert on invoicestatus from robotrole;
-
-    # Make connection
-    # ${insert}=    Set Variable    insert into invoice_status (id, name) values (100, 'testi')
-    # Log    ${insert}
-    # Execute Sql String    ${insert}
-
-    # Disconnect From Database
+    
