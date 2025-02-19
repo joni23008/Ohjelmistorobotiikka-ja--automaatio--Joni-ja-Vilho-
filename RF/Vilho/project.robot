@@ -79,7 +79,7 @@ Read CSV file to list and add data to database
 
     #add invoice headers
     FOR    ${headerElement}    IN    @{headers}
-        Log    ${headerElement}
+       Log    ${headerElement}
         @{headerItems}=    Split String    ${headerElement}    ;
 
         Add Invoice Header to DB    ${headerItems}
@@ -92,3 +92,40 @@ Read CSV file to list and add data to database
 
         Add InvoiceRow to DB    ${rowItems}
     END
+
+*** Tasks ***
+Validate and update validation info to DB
+    # Find all invoices with status -1 processing
+    # Validations
+    #    *Reference number
+    #    *IBAN
+    #    *Invoice row amount vs invoice header amount
+    Make Connection    ${dbname}
+    ${invoices}=    Query    select invoice_number, reference_number, bank_account_number, total_amount from invoice_header where invoice_status_id = -1;
+
+    FOR    ${element}    IN    @{invoices}
+        Log    ${element}
+        ${invoiceStatus}=    Set Variable    0
+        ${invoiceComment}=    Set Variable    All ok    
+        
+        # Validate reference number
+
+
+        # Validate IBAN
+
+
+        # Validate invoice row amount vs invoice header amount
+
+
+        # Update status to db
+        @{params}=    Create List    ${invoiceStatus}    ${invoiceComment}    ${element}[0]
+        ${updateStmt}=    Set Variable    update invoice_header set invoice_status_id = %s, comments = %s where invoice_number = %s;
+        Execute Sql String    ${updateStmt}    parameters=${params}
+    
+    
+    END
+
+
+
+
+    Disconnect From Database
