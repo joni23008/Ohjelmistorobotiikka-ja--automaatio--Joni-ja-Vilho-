@@ -1,0 +1,5 @@
+select * from invoice_row;
+select * from invoice_header;
+
+delete from invoice_row;
+delete from invoice_header;
