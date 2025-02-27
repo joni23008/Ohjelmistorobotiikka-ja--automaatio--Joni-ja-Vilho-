@@ -4,7 +4,7 @@ Library    String
 Library    Collections
 Library    DatabaseLibrary
 Library    DateTime
-Resource    ../Joni/project.robot
+Library    validate.py
 
 *** Variables ***
 ${PATH}    C:\\Users\\Vilho\\OneDrive\\Desktop\\Gitit\\Ohjelmistorobotiikka-ja--automaatio--Joni-ja-Vilho-\\RF\\
@@ -29,10 +29,12 @@ Add Invoice Header to DB
     ${invoice_date}=    Convert Date    ${items}[4]    date_format=%d.%m.%Y    result_format=%Y-%m-%d
     ${due_date}=    Convert Date    ${items}[5]    date_format=%d.%m.%Y    result_format=%Y-%m-%d
 
-    ${insertStmt}=    Set Variable    insert into invoice_header (invoice_number, company_name, company_code, reference_number, invoice_date, due_date, bank_account_number, amount_exclude_vat, vat, total_amount, invoice_status_id, comments) values ('${items}[0]', '${items}[1]', '${items}[5]', '${items}[2]', '${invoice_date}', '${due_date}', '${items}[6]', ${items}[7], ${items}[8], ${items}[9], -1, 'Processing');
+    ${insertStmt}=    Set Variable    insert into invoice_header (invoice_number, company_name, company_code, reference_number, invoice_date, due_date, bank_account_number, amount_exclude_vat, vat, total_amount, invoice_status_id, comments) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+    @{params}=    Create List    ${items}[0]    ${items}[1]    ${items}[5]    ${items}[2]    ${invoice_date}    ${due_date}    ${items}[6]    ${items}[7]    ${items}[8]    ${items}[9]    -1    'Processing'
     
     Log    ${insertStmt}
-    Execute Sql String    ${insertStmt}
+    Execute Sql String    ${insertStmt}    parameters=${params}
+
 
     Disconnect From Database
 
@@ -41,9 +43,10 @@ Add InvoiceRow to DB
     [Arguments]    ${items}
     Make Connection    ${dbname}
 
-    ${insertStmt}=    Set Variable    insert into invoice_row (invoice_number, rownumber, description, quantity, unit, unit_price, vat_percent, vat, total) values ('${items}[0]', '${items}[1]', '${items}[2]', '${items}[3]', '${items}[4]', '${items}[5]', '${items}[6]', '${items}[7]', '${items}[8]');
+    ${insertStmt}=    Set Variable    insert into invoice_row (invoice_number, rownumber, description, quantity, unit, unit_price, vat_percent, vat, total) values (%s, %s, %s, %s, %s, %s, %s, %s, %s);
+    @{params}=    Create List    ${items}[0]    ${items}[1]    ${items}[2]    ${items}[3]    ${items}[4]    ${items}[5]    ${items}[6]    ${items}[7]    ${items}[8]
     Log    ${insertStmt}
-    Execute Sql String    ${insertStmt}
+    Execute Sql String    ${insertStmt}    parameters=${params}
 
     Disconnect From Database
 
@@ -93,29 +96,31 @@ Read CSV file to list and add data to database
         Add InvoiceRow to DB    ${rowItems}
     END
 
+    Disconnect From Database
 *** Tasks ***
 Validate and update validation info to DB
     # Find all invoices with status -1 processing
     # Validations
-    #    *Reference number
-    #    *IBAN
+    # Reference number
+
     #    *Invoice row amount vs invoice header amount
     Make Connection    ${dbname}
     ${invoices}=    Query    select invoice_number, reference_number, bank_account_number, total_amount from invoice_header where invoice_status_id = -1;
 
     FOR    ${element}    IN    @{invoices}
         Log    ${element}
-        ${invoiceStatus}=    Set Variable    0
+        ${invoiceStatus}=    Set Variable    0    
         ${invoiceComment}=    Set Variable    All ok    
         
-        # Validate reference number
-
-
-        # Validate IBAN
-
-
-        # Validate invoice row amount vs invoice header amount
-
+    #IBAN validation
+        # Käytetään 'Check Iban' funkiota, jossa on suoritettu tilinumeron muunnokset ja laskutoimitukset.
+        ${valid_iban}=    Check Iban    ${element}[2]
+        # Jos validin IBAN numberon ehdot ei täyty, palautuu arvoksi 'False',
+        # jolloin 'status' sarake saa arvon 2, ja 'comment' sarake arvon 'invalid iban'
+        IF    ${valid_iban} == ${False}
+            ${invoiceStatus}=    Set Variable    2
+            ${invoiceComment}=    Set Variable    iban error
+        END
 
         # Update status to db
         @{params}=    Create List    ${invoiceStatus}    ${invoiceComment}    ${element}[0]
@@ -124,8 +129,6 @@ Validate and update validation info to DB
     
     
     END
-
-
 
 
     Disconnect From Database
