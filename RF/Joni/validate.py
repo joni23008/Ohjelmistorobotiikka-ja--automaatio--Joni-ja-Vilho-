@@ -1,4 +1,4 @@
-def isEqual(headerTotal, rowTotal, maxDifference):
-    if ( abs(headerTotal-rowTotal) <= maxDifference ):
+def isEqual(header, row, maxDifference):
+    if ( abs(header-row) <= maxDifference ):
         return True
     return False

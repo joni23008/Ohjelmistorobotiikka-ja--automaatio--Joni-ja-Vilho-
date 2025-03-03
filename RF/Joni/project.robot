@@ -44,17 +44,17 @@ Add Invoice Row To DB
     # 
     Disconnect From Database
 Check Amount From Invoice
-    # tuodaan argumentteina otsikon ja rivien summa
-    [Arguments]    ${totalSumFromHeaders}    ${totalSumFromRows}
+    # tuodaan argumentteina otsikon ja rivien summat
+    [Arguments]    ${headerAmount}    ${rowsAmount}
     # defaulttina status on false eli väärin
     ${status}=    Set Variable    ${False}
-    # muuttujien sisätlö muutetaan numeroiksi
-    ${totalSumFromHeaders}=    Convert To Number    ${totalSumFromHeaders}
-    ${totalSumFromRows}=    Convert To Number    ${totalSumFromRows}
+    # muuttujien sisältö muutetaan numeroiksi
+    ${headerAmount}=    Convert To Number    ${headerAmount}
+    ${rowsAmount}=    Convert To Number    ${rowsAmount}
     # virhe toleranssi
     ${diff}=    Convert To Number    0.01
-    # tää vie python koodiin > validate.py
-    ${status}=    Is Equal    ${totalSumFromHeaders}    ${totalSumFromRows}    ${diff}
+    # Viedään python koodille numeraaliseksi muutettu otsikko summa,rivisumma ja virhetoleranssi > validate.py
+    ${status}=    Is Equal    ${headerAmount}    ${rowsAmount}    ${diff}
     # palautetaan status (false = väärin, true = oikein)
     RETURN    ${status}
 Convert Query Result To Decimal List
@@ -120,15 +120,16 @@ Validate And Update Validation Info To DB
     # Query jolla päivitetään laskun status id ja kommentti
     ${updateStatement}=    Set Variable    update invoice_header set invoice_status_id = %s, comments = %s where invoice_number = %s;
 
-    # Looppaa läpi jokainen header otsikko jossa status id oli -1
+    # Silmukassa käydään läpi jokainen header otsikko jossa status id oli -1
     FOR    ${invoice}    IN    @{invoices}
-    
-        # Loggaa mikä laskunumero, tiedetään mikä lasku on kyseessä
-        Log    ${invoice}[0]
+
+        # TESTAAMISTA VARTEN:::
+        ${testi}=    Set Variable    666
+        ${testi}=    Convert To Integer    ${testi}
+        Log    ${invoice}
+
         # Hae rullaavan laskun laskunumeron mukaan kaikki rivit ja niistä summat tietokannasta
-        ${invoiceRows}=    Query    select total from invoice_row where invoice_number = '${invoice}[0]';
-        # Loggaa kaikki rivit joilla on tämä laskunumero
-        Log    ${invoiceRows}
+        ${invoiceRowsAmounts}=    Query    select total from invoice_row where invoice_number = '${invoice}[0]';
 
         # Parametri-listat eri skenaarioille:
         # All ok = Kaikki OK tällä laskulla!
@@ -137,20 +138,28 @@ Validate And Update Validation Info To DB
         @{summaVäärä}=    Create List    ${invoiceStatus}[3]    ${invoiceComment}[3]    ${invoice}[0]
 
 
-        # JONI: Summien käsittely
-        # käytetään keywordia: Convert Query Result To Decimal List
-        # siellä muutetaan querysta saatu lista nuemraaliseksi
-        ${decimal_values}    Convert Query Result To Decimal List    ${invoiceRows}
+        # käytetään keywordia: Convert Query Result To Decimal List, siellä muutetaan querysta saatu lista numeraaliseksi
+        ${totals}    Convert Query Result To Decimal List    ${invoiceRowsAmounts}
+        # TÄHÄN LISÄÄ...............................................
+
         # summataan listan kaikki elementit yhteen
-        ${rivienSummaTulos}    Evaluate    sum(${decimal_values})
+        ${rowsTotalResult}    Evaluate    sum(${totals})
+        # TÄHÄN LISÄÄ...............................................
+
         # tarkistetaan summa, argumenteiksi annetaan tämänhetkisen laskun total ja juuri summattu rivien tulos
-        ${summaStatus}=    Check Amount From Invoice    ${invoice}[1]    ${rivienSummaTulos}
-        IF    ${summaStatus}
-            Log    Laskulla | ${invoice}[0] | summat täsmäävät, header= ${invoice}[1] VS rows= ${rivienSummaTulos}
+        # TESTAAMISTA VARTEN:::
+        # ${totalStatus}=    Check Amount From Invoice    ${testi}    ${rowsTotalResult}
+        ${totalStatus}=    Check Amount From Invoice    ${invoice}[1]    ${rowsTotalResult}
+        # TÄHÄN LISÄÄ...............................................
+
+
+
+        IF    ${totalStatus}
+            Log    Laskulla | ${invoice}[0] | summat täsmäävät, header= ${invoice}[1] VS rows= ${rowsTotalResult} | testi= ${testi}
             # Päivitetään header tauluun tälle laskulle, tämän mukaan status id ja kommentti
             Execute Sql String    ${updateStatement}    parameters=${ok}
         ELSE
-            Log    Laskulla | ${invoice}[0] | summat EI täsmää, header= ${invoice}[1] VS rows= ${rivienSummaTulos}
+            Log    Laskulla | ${invoice}[0] | summat EI täsmää, header= ${invoice}[1] VS rows= ${rowsTotalResult} | testi= ${testi}
             # Päivitetään header tauluun tälle laskulle, tämän mukaan status id ja kommentti
             Execute Sql String    ${updateStatement}    parameters=${summaVäärä}
         END
