@@ -30,7 +30,7 @@ Add Invoice Header to DB
     ${due_date}=    Convert Date    ${items}[5]    date_format=%d.%m.%Y    result_format=%Y-%m-%d
 
     ${insertStmt}=    Set Variable    insert into invoice_header (invoice_number, company_name, company_code, reference_number, invoice_date, due_date, bank_account_number, amount_exclude_vat, vat, total_amount, invoice_status_id, comments) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-    @{params}=    Create List    ${items}[0]    ${items}[1]    ${items}[5]    ${items}[2]    ${invoice_date}    ${due_date}    ${items}[6]    ${items}[7]    ${items}[8]    ${items}[9]    -1    'Processing'
+    @{params}=    Create List    ${items}[0]    ${items}[1]    ${items}[2]    ${items}[3]    ${invoice_date}    ${due_date}    ${items}[6]    ${items}[7]    ${items}[8]    ${items}[9]    -1    'Processing'
     
     Log    ${insertStmt}
     Execute Sql String    ${insertStmt}    parameters=${params}
@@ -122,12 +122,18 @@ Validate and update validation info to DB
             ${invoiceComment}=    Set Variable    iban error
         END
 
-        # Update status to db
+    # Reference number validation
+        ${valid_ref}=    Check Ref    ${element}[1]
+
+        IF    ${valid_ref} == "False"
+            ${invoiceStatus}=    Set Variable    1
+            ${invoiceComment}=    Set Variable    ref error
+        END
+
+        # Update the database
         @{params}=    Create List    ${invoiceStatus}    ${invoiceComment}    ${element}[0]
         ${updateStmt}=    Set Variable    update invoice_header set invoice_status_id = %s, comments = %s where invoice_number = %s;
         Execute Sql String    ${updateStmt}    parameters=${params}
-    
-    
     END
 
 
