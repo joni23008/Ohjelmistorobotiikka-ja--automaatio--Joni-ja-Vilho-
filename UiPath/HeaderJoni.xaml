@@ -128,7 +128,7 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:DeleteFileX DisplayName="Delete File" sap:VirtualizedContainerService.HintSize="571.2,112.8" sap2010:WorkflowViewState.IdRef="DeleteFileX_1" Path="InvoiceHeaderDataJoni.csv" />
+    <ui:DeleteFileX DisplayName="Delete File" sap:VirtualizedContainerService.HintSize="571.2,112.8" sap2010:WorkflowViewState.IdRef="DeleteFileX_1" Path="CSV_Väliaikaiset/InvoiceHeaderDataJoni.csv" />
     <Sequence sap:VirtualizedContainerService.HintSize="571.2,5044.8" sap2010:WorkflowViewState.IdRef="Sequence_10">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -141,7 +141,7 @@
           <OutArgument x:TypeArguments="s:String[]">[Files]</OutArgument>
         </Assign.To>
         <Assign.Value>
-          <InArgument x:TypeArguments="s:String[]">[Directory.GetFiles("PDF-Laskut","*.pdf")]</InArgument>
+          <InArgument x:TypeArguments="s:String[]">[Directory.GetFiles("Laskut_Skannatut","*.pdf")]</InArgument>
         </Assign.Value>
       </Assign>
       <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each File" sap:VirtualizedContainerService.HintSize="537.6,4489.6" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[Files]">
@@ -393,7 +393,7 @@
                       </Assign.Value>
                     </Assign>
                     <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="433.6,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Warn" Message="[&quot;.&quot; + totalAmount + &quot;.&quot;]" />
-                    <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[New Object() {&#xD;&#xA;&#x9;invoiceNumber, &#xD;&#xA;&#x9;companyName, &#xD;&#xA;&#x9;companyCode, &#xD;&#xA;&#x9;referenceNumber, &#xD;&#xA;&#x9;invoiceDate, &#xD;&#xA;&#x9;dueDate, &#xD;&#xA;&#x9;bankAccountNumber, &#xD;&#xA;&#x9;Convert.ToDouble(amountExcludeVAT.Replace(&quot;,&quot;,&quot;.&quot;).Replace(&quot; &quot;,&quot;&quot;)),&#xD;&#xA;&#x9;Convert.ToDouble(vat.Replace(&quot;,&quot;,&quot;.&quot;).Replace(&quot; &quot;,&quot;&quot;)), &#xD;&#xA;&#x9;Convert.ToDouble(totalAmount.Replace(&quot;,&quot;,&quot;.&quot;).Replace(&quot; &quot;,&quot;&quot;))&#xD;&#xA;}]" DataTable="[dt_HeaderResult]" DisplayName="Add Data Row" sap:VirtualizedContainerService.HintSize="433.6,211.2" sap2010:WorkflowViewState.IdRef="AddDataRow_3" />
+                    <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[New Object() {&#xA;&#x9;invoiceNumber, &#xA;&#x9;companyName, &#xA;&#x9;companyCode, &#xA;&#x9;referenceNumber, &#xA;&#x9;invoiceDate, &#xA;&#x9;dueDate, &#xA;&#x9;bankAccountNumber, &#xA;&#x9;Convert.ToDouble(amountExcludeVAT.Replace(&quot;,&quot;,&quot;.&quot;).Replace(&quot; &quot;,&quot;&quot;)),&#xA;&#x9;Convert.ToDouble(vat.Replace(&quot;,&quot;,&quot;.&quot;).Replace(&quot; &quot;,&quot;&quot;)), &#xA;&#x9;Convert.ToDouble(totalAmount.Replace(&quot;,&quot;,&quot;.&quot;).Replace(&quot; &quot;,&quot;&quot;))&#xA;}]" DataTable="[dt_HeaderResult]" DisplayName="Add Data Row" sap:VirtualizedContainerService.HintSize="433.6,211.2" sap2010:WorkflowViewState.IdRef="AddDataRow_3" />
                   </Sequence>
                 </Sequence>
               </Switch>
@@ -402,7 +402,7 @@
         </ui:ForEach.Body>
       </ui:ForEach>
       <ui:Comment sap:VirtualizedContainerService.HintSize="537.6,88" sap2010:WorkflowViewState.IdRef="Comment_2" Text="Kirjoitetaan CSV tiedostoon" />
-      <ui:WriteCsvFile AddHeaders="True" DataTable="[dt_HeaderResult]" Delimitator="Semicolon" DisplayName="Write CSV" FilePath="InvoiceHeaderDataJoni.csv" sap:VirtualizedContainerService.HintSize="537.6,178.4" sap2010:WorkflowViewState.IdRef="WriteCsvFile_1" ShouldQuote="True" />
+      <ui:WriteCsvFile AddHeaders="True" DataTable="[dt_HeaderResult]" Delimitator="Semicolon" DisplayName="Write CSV" FilePath="CSV_Väliaikaiset/InvoiceHeaderDataJoni.csv" sap:VirtualizedContainerService.HintSize="537.6,178.4" sap2010:WorkflowViewState.IdRef="WriteCsvFile_1" ShouldQuote="True" />
     </Sequence>
   </Sequence>
 </Activity>

@@ -1,9 +1,0 @@
-﻿InvoiceNumber;RowNumber;Description;Quantity;Unit;UnitPrice;VATPercent;VAT;Total
-143143;1;Installation Services;5;h;60;24;72;372
-143143;2;Replacement Products;10;kpl;105;24;252;1302
-1543235;1;Keyboard Logitech;10;kpl;40;24;96;496
-1543235;2;Brother printer;1;kpl;65;24;15.6;80.6
-153143;1;Installation Services;5;h;60;24;72;372
-153143;2;Replacement Products;10;kpl;105;24;252;1302
-153143;3;Cleaning Services;5;h;60;24;72;372
-153143;4;Cleaning Wipes;10;kpl;105;24;252;1302

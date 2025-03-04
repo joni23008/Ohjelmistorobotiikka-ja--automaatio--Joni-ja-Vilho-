@@ -139,7 +139,7 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:DeleteFileX DisplayName="Delete File" sap:VirtualizedContainerService.HintSize="641.6,112.8" sap2010:WorkflowViewState.IdRef="DeleteFileX_1" Path="InvoiceRowDataJoni.csv" />
+    <ui:DeleteFileX DisplayName="Delete File" sap:VirtualizedContainerService.HintSize="641.6,112.8" sap2010:WorkflowViewState.IdRef="DeleteFileX_1" Path="CSV_Väliaikaiset/InvoiceRowDataJoni.csv" />
     <Sequence sap:VirtualizedContainerService.HintSize="641.6,4753.6" sap2010:WorkflowViewState.IdRef="Sequence_10">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -152,7 +152,7 @@
           <OutArgument x:TypeArguments="s:String[]">[Files]</OutArgument>
         </Assign.To>
         <Assign.Value>
-          <InArgument x:TypeArguments="s:String[]">[Directory.GetFiles("PDF-Laskut","*.pdf")]</InArgument>
+          <InArgument x:TypeArguments="s:String[]">[Directory.GetFiles("Laskut_Skannatut","*.pdf")]</InArgument>
         </Assign.Value>
       </Assign>
       <ui:ForEach x:TypeArguments="x:String" CurrentIndex="[index]" DisplayName="For Each File" sap:VirtualizedContainerService.HintSize="608,4198.4" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[Files]">
@@ -385,7 +385,7 @@
         </ui:ForEach.Body>
       </ui:ForEach>
       <ui:Comment sap:VirtualizedContainerService.HintSize="608,88" sap2010:WorkflowViewState.IdRef="Comment_2" Text="Kirjoitetaan CSV tiedostoon" />
-      <ui:WriteCsvFile AddHeaders="True" DataTable="[dt_RowResult]" Delimitator="Semicolon" DisplayName="Write CSV" FilePath="InvoiceRowDataJoni.csv" sap:VirtualizedContainerService.HintSize="608,178.4" sap2010:WorkflowViewState.IdRef="WriteCsvFile_1" ShouldQuote="True" />
+      <ui:WriteCsvFile AddHeaders="True" DataTable="[dt_RowResult]" Delimitator="Semicolon" DisplayName="Write CSV" FilePath="CSV_Väliaikaiset/InvoiceRowDataJoni.csv" sap:VirtualizedContainerService.HintSize="608,178.4" sap2010:WorkflowViewState.IdRef="WriteCsvFile_1" ShouldQuote="True" />
     </Sequence>
   </Sequence>
 </Activity>
