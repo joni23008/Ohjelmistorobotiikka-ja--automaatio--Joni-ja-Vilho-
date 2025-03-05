@@ -6,6 +6,7 @@
 !*.docx
 !*.md
 !*.csv
+!*.txt
 
 # Kuvakaappaukset
 !Kuvakaappaukset/
