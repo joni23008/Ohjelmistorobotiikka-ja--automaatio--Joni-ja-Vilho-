@@ -125,7 +125,7 @@ Validate and update validation info to DB
     # Reference number validation
         ${valid_ref}=    Check Ref    ${element}[1]
 
-        IF    ${valid_ref} == "False"
+        IF    ${valid_ref} == ${False}
             ${invoiceStatus}=    Set Variable    1
             ${invoiceComment}=    Set Variable    ref error
         END
