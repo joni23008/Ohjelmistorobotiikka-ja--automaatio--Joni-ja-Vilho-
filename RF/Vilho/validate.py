@@ -19,10 +19,11 @@ def check_Iban(Iban: str) -> bool:
     # IBAN / 97 = 1
     return int(numericIban) % 97 == 1
 
-# Testi
+    # Testi
 if __name__ == "__main__":
     test_Iban = "FI2112345600000785"
     print(check_Iban(test_Iban))  # True (jos IBAN on muodostettu oikein)
+
 
 
     # Luodaan viitenumeron tarkastusta varten funktio
@@ -47,7 +48,7 @@ def check_Ref(Ref: str) -> bool:
 
     return check_Digit_Computed == check_Digit_Given  # Verrataan ohjelman laskettua viitenumeroa, ja valmiiksi annettua viitenumeroa
 
-# Testi
+    # Testi
 test_Ref = "1431432"
 
 print(check_Ref(test_Ref))

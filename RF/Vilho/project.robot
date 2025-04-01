@@ -109,14 +109,14 @@ Validate and update validation info to DB
 
     FOR    ${element}    IN    @{invoices}
         Log    ${element}
-        ${invoiceStatus}=    Set Variable    0    
-        ${invoiceComment}=    Set Variable    All ok    
+        ${invoiceStatus}=    Set Variable    0
+        ${invoiceComment}=    Set Variable    All ok 
         
     #IBAN validation
         # Käytetään 'Check Iban' funkiota, jossa on suoritettu tilinumeron muunnokset ja laskutoimitukset.
         ${valid_iban}=    Check Iban    ${element}[2]
-        # Jos validin IBAN numberon ehdot ei täyty, palautuu arvoksi 'False',
-        # jolloin 'status' sarake saa arvon 2, ja 'comment' sarake arvon 'invalid iban'
+        # Jos validin IBAN numeron ehdot ei täyty, palautuu arvoksi 'False',
+        # jolloin 'status' sarake saa arvon 2, ja 'comment' sarake arvon 'iban error'
         IF    ${valid_iban} == ${False}
             ${invoiceStatus}=    Set Variable    2
             ${invoiceComment}=    Set Variable    iban error
@@ -124,7 +124,8 @@ Validate and update validation info to DB
 
     # Reference number validation
         ${valid_ref}=    Check Ref    ${element}[1]
-
+    # Jos validin viitenumeron ehdot ei täyty, palautuu arvoksi 'False',
+    # jolloin 'status' sarake saa arvon 1, ja 'comment' sarake arvon 'ref error'
         IF    ${valid_ref} == ${False}
             ${invoiceStatus}=    Set Variable    1
             ${invoiceComment}=    Set Variable    ref error
